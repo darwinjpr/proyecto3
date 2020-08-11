@@ -1,5 +1,7 @@
 #Import necesary libraries
 import cv2
+import pickle
+import face_recognition
 import numpy as np
 from datetime import date, datetime, timedelta
 
@@ -30,6 +32,23 @@ def timecounter(duration):
 	file.close()
 	return 0
 
+#Function for recognize faces in the picture
+def recognizer(frame,encoding,matches):
+	#Reformat frame
+	RGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+	
+	#Find faces in the image
+	boxes = face_recognition.face_locations(RGB, model="hog")
+	encodings = face_recognition.face_encodings(RGB, boxes)
+	
+	for encoding in encodings:
+		matches = face_recognition.compare_faces(np.array(encoding),np.array(data["encodings"]))
+	
+	if True in matches:
+		return "Edwin"
+	else:
+		return "Desconocida"
+
 #Global variables
 cont = 1
 First = True
@@ -39,6 +58,9 @@ now = datetime.now()
 reference = datetime.now()
 end = datetime.now()
 start = datetime.now()
+encoding = "/home/edov84/Documentos/TEC/Semestre1_2020/Taller_Sistemas_Embebidos/Proyecto3/modelo.pickle"
+data = pickle.loads(open(encoding,"rb").read())
+matches = [False]
 
 #Writes headline
 headline()
@@ -91,7 +113,7 @@ while (True):
 	elif now >= reference and not Registered and Intrusion:
 		Registered = True
 		#Write report
-		person = "desconocida"
+		person = recognizer(frame,encoding,matches)
 		cont = report(now,person,cont)
 	
 	#Checks moment of last detected movement
