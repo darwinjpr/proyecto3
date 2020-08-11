@@ -1,0 +1,30 @@
+#Creates the picke file for the recognition
+
+import cv2
+from imutils import paths
+import numpy as np
+import imutils
+import face_recognition
+import pickle
+import os
+dataset = "/home/edov84/Documentos/TEC/Semestre1_2020/Taller_Sistemas_Embebidos/Proyecto3/Entrenador/edwin"# path of the data set 
+module = "/home/edov84/Documentos/TEC/Semestre1_2020/Taller_Sistemas_Embebidos/Proyecto3/Entrenador/modelo.pickle" # were u want to store the pickle file 
+
+imagepaths = list(paths.list_images(dataset))
+knownEncodings = []
+knownNames = []
+for (i, imagePath) in enumerate(imagepaths):
+    print("[INFO] processing image {}/{}".format(i + 1,len(imagepaths)))
+    name = imagePath.split(os.path.sep)[-2]
+    image = cv2.imread(imagePath)
+    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)	
+    boxes = face_recognition.face_locations(rgb, model= "hog")
+    encodings = face_recognition.face_encodings(rgb, boxes)
+    for encoding in encodings:
+       knownEncodings.append(encoding)
+       knownNames.append(name)
+       print("[INFO] serializing encodings...")
+       data = {"encodings": knownEncodings, "names": knownNames}
+       output = open(module, "wb") 
+       pickle.dump(data, output)
+       output.close()
