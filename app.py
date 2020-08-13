@@ -17,9 +17,6 @@ class Application(tk.Frame):
 
 	def create_widgets(self):
 		#crea las partes de la app
-		self.hi_there = tk.Button(self)
-		self.hi_there["text"] = "Hello World\n(click me)"
-		self.hi_there["command"] = self.say_hi
 
 		self.etiq_user = tk.Label(self, text="Usuario:", font="Arial")
 		self.usuario = str
@@ -34,15 +31,15 @@ class Application(tk.Frame):
 		self.ctext_ip = tk.Entry(self, textvariable=self.ip,width=30)	
 
 		self.connect_ssh = tk.Button(self)
-		self.connect_ssh["text"] = "Comprobar datos de conexion.\n(click me)"
+		self.connect_ssh["text"] = "Comprobar datos de conexion."
 		self.connect_ssh["command"] = self.connect
 
 		self.start_app = tk.Button(self)
-		self.start_app["text"] = "Iniciar aplicacion\n(click me)"
+		self.start_app["text"] = "Iniciar aplicacion."
 		self.start_app["command"] = self.startapp
 
 		self.read_inf = tk.Button(self)
-		self.read_inf["text"] = "Leer informe\n(click me)"
+		self.read_inf["text"] = "Leer informe."
 		self.read_inf["command"] = self.read
 
 		self.etiq_video = tk.Label(self, text="Video a ver:", font="Arial")
@@ -50,14 +47,13 @@ class Application(tk.Frame):
 		self.ctext_video = tk.Entry(self, textvariable=self.video,width=30)
 
 		self.watch_video = tk.Button(self)
-		self.watch_video["text"] = "Ver video\n(click me)"
+		self.watch_video["text"] = "Ver video."
 		self.watch_video["command"] = self.watchvideo
 
-		self.quit = tk.Button(self, text="QUIT", fg="red")
+		self.quit = tk.Button(self, text="SALIR", fg="red")
 		self.quit["command"] = self.exit
 
 		#Acomoda partes de la app en la ventana
-		self.hi_there.grid(column=0, row=0, columnspan=3)
 
 		self.etiq_user.grid(column=0, row=1)
 		self.ctext_user.grid(column=1, row=1, columnspan=2)
@@ -103,7 +99,7 @@ class Application(tk.Frame):
 		client.set_missing_host_key_policy( paramiko.AutoAddPolicy() )
 		client.connect(self.ctext_ip.get(), username=self.ctext_user.get(), password=self.ctext_clave.get())
 		print("\nConectado!")
-		stdin, stdout, stderr = client.exec_command('ls git/patrones-proyecto2/')
+		stdin, stdout, stderr = client.exec_command('python3 /usr/bin/python-sniffer.py')
 		result = stdout.read().decode()
 		print(result)
 		print("\nCerrando conexion.")
@@ -115,7 +111,7 @@ class Application(tk.Frame):
 		client.set_missing_host_key_policy( paramiko.AutoAddPolicy() )
 		client.connect(self.ctext_ip.get(), username=self.ctext_user.get(), password=self.ctext_clave.get())
 		print("\nConectado!")
-		stdin, stdout, stderr = client.exec_command('ls git/patrones-proyecto2/')
+		stdin, stdout, stderr = client.exec_command('nano -v /usr/bin/Informe.txt') #abre solo lectura
 		result = stdout.read().decode()
 		print(result)
 		print("\nCerrando conexion.")
@@ -127,7 +123,7 @@ class Application(tk.Frame):
 		client.set_missing_host_key_policy( paramiko.AutoAddPolicy() )
 		client.connect(self.ctext_ip.get(), username=self.ctext_user.get(), password=self.ctext_clave.get())
 		print("\nConectado!")
-		stdin, stdout, stderr = client.exec_command('ls git/patrones-proyecto2/')
+		stdin, stdout, stderr = client.exec_command(['omxplayer', "/usr/bin/"+self.ctext_video.get()])
 		result = stdout.read().decode()
 		print(result)
 		print("\nCerrando conexion.")
