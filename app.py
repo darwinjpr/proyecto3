@@ -75,26 +75,34 @@ class Application(tk.Frame):
 		self.start_app["command"] = self.startapp
 		self.start_app.grid(column=1, row=0, columnspan=3)
 
+		self.end_app = tk.Button(self.connect_interface)
+		self.end_app["text"] = "Terminar ejecucion de aplicacion."
+		self.end_app["command"] = self.endapp
+		self.end_app.grid(column=1, row=1, columnspan=3)
+
 		self.read_inf = tk.Button(self.connect_interface)
 		self.read_inf["text"] = "Leer informe."
 		self.read_inf["command"] = self.read
-		self.read_inf.grid(column=1, row=1, columnspan=3)
+		self.read_inf.grid(column=1, row=2, columnspan=3)
 
 		self.watch_video = tk.Button(self.connect_interface)
 		self.watch_video["text"] = "Ver video."
 		self.watch_video["command"] = self.watchvideo
-		self.watch_video.grid(column=1, row=2, columnspan=3)
+		self.watch_video.grid(column=1, row=3, columnspan=3)
 
 		self.quit2 = tk.Button(self.connect_interface, text="SALIR", fg="red")
 		self.quit2["command"] = self.disconnect
-		self.quit2.grid(column=1, row=3, columnspan=3)
+		self.quit2.grid(column=1, row=4, columnspan=3)
 
 		self.master.wait_window(self.connect_interface)
 
 	def startapp(self):#para iniciar sniffer
 		print("\nIniciando aplicacion!")
-		print("\nPresione ESC para salir!")
 		self.client.exec_command('python3 /home/darwin/proyecto3/sniffer_trial.py')
+
+	def endapp(self):#para iniciar sniffer
+		print("\nTerminando ejecucion!")
+		self.client.exec_command('^C')
 
 	def read(self):#Para leer informe generado por el sniffer (sin hacer)
 		print("\nAbriendo informe!")
