@@ -107,8 +107,8 @@ class Application(tk.Frame):
 
 	def read(self):#Para leer informe generado por el sniffer (sin hacer)
 		print("\nAbriendo informe!")
-		self.sftp.get('/home/darwin/Descargas/Informe.txt', '~/proyecto3/inform.txt')
-		subprocess.call(['nano','-v','inform.txt'])
+		self.sftp.get('/home/darwin/Descargas/Informe.txt', '/home/darwin/proyecto3/informe.txt')
+		subprocess.call(['nano','-v','informe.txt'])
 
 	def watchvideo(self):#Para ver un video generado por el sniffer (sin hacer)
 		print("\nReproduciendo video!")
