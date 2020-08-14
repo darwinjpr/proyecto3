@@ -3,7 +3,7 @@ import time
 import tkinter as tk
 import subprocess #para ejecutar en terminal de computador
 import paramiko #para ejecutar remoto
-from getpass import getpass
+#from getpass import getpass
 
 class Application(tk.Frame):
 	def __init__(self, master=None):#crea la raiz o ventana principal de la app
@@ -11,7 +11,7 @@ class Application(tk.Frame):
 		self.master = master
 		self.master.geometry("800x600")
 		self.master.resizable(0,0)
-		self.master.title("applicacion de seguridad")
+		self.master.title("aplicacion de seguridad")
 		self.pack()
 		self.create_widgets()
 
@@ -58,7 +58,7 @@ class Application(tk.Frame):
 	def connect(self):#Establece conexion via ssh
 		self.client=paramiko.SSHClient()
 		self.client.set_missing_host_key_policy( paramiko.AutoAddPolicy() )
-		self.client.connect('192.168.0.107', username='darwin', password='holahola')
+		self.client.connect('192.168.0.106', username='darwin', password='holahola')
 		self.sftp = self.client.open_sftp()
 		#self.client.connect(self.ctext_ip.get(), username=self.ctext_user.get(), password=self.ctext_clave.get())
 		print("\nConectado!")
@@ -80,40 +80,33 @@ class Application(tk.Frame):
 		self.read_inf["command"] = self.read
 		self.read_inf.grid(column=1, row=1, columnspan=3)
 
-		self.etiq_video = tk.Label(self.connect_interface, text="Video a ver:", font="Arial")
-		self.etiq_video.grid(column=1, row=2)
-
-		self.video = str   
-		self.ctext_video = tk.Entry(self.connect_interface, textvariable=self.video,width=30)
-		self.ctext_video.grid(column=2, row=2, columnspan=2)
-
 		self.watch_video = tk.Button(self.connect_interface)
 		self.watch_video["text"] = "Ver video."
 		self.watch_video["command"] = self.watchvideo
-		self.watch_video.grid(column=1, row=3, columnspan=3)
+		self.watch_video.grid(column=1, row=2, columnspan=3)
 
 		self.quit2 = tk.Button(self.connect_interface, text="SALIR", fg="red")
 		self.quit2["command"] = self.disconnect
-		self.quit2.grid(column=1, row=4, columnspan=3)
+		self.quit2.grid(column=1, row=3, columnspan=3)
 
 		self.master.wait_window(self.connect_interface)
 
 	def startapp(self):#para iniciar sniffer
 		print("\nIniciando aplicacion!")
 		print("\nPresione ESC para salir!")
-		stdin, stdout, stderr = self.client.exec_command('python3 Descargas/apple.py')
-		result = stdout.read().decode()
-		print(result)
+		self.client.exec_command('python3 /home/darwin/proyecto3/sniffer_trial.py')
 
 	def read(self):#Para leer informe generado por el sniffer (sin hacer)
 		print("\nAbriendo informe!")
-		self.sftp.get('/home/darwin/Descargas/Informe.txt', '/home/darwin/proyecto3/informe.txt')
-		subprocess.call(['nano','-v','informe.txt'])
+		#Direccion = subprocess.call(['pwd'])
+		#self.sftp.get('/home/darwin/Descargas/Informe.txt', '/home/darwin/proyecto3/informe.txt')
+		self.sftp.get('/home/darwin/proyecto3/Informe.txt', '/home/darwin/proyecto3/informeprueba.txt')
+		subprocess.call(['nano','-v','informeprueba.txt'])
 
 	def watchvideo(self):#Para ver un video generado por el sniffer (sin hacer)
 		print("\nReproduciendo video!")
-		self.sftp.get('/home/darwin/Descargas/Corto_Animado29.avi', '/home/darwin/proyecto3/Corto1.avi')
-		subprocess.call(['mplayer','Corto1.avi'])
+		self.sftp.get('/home/darwin/proyecto3/footage.avi', '/home/darwin/proyecto3/videoprueba.avi')
+		subprocess.call(['mplayer','videoprueba.avi'])
 
 	def disconnect(self):#Salir de la app
 		print("\nCerrando conexion!")
