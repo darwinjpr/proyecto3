@@ -58,7 +58,7 @@ now = datetime.now()
 reference = datetime.now()
 end = datetime.now()
 start = datetime.now()
-encoding = "/home/edov84/Documentos/TEC/Semestre1_2020/Taller_Sistemas_Embebidos/Proyecto3/modelo.pickle"
+encoding = "./modelo.pickle"
 data = pickle.loads(open(encoding,"rb").read())
 matches = [False]
 
