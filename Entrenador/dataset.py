@@ -4,10 +4,10 @@ import numpy as np
 import os
 import cv2
 
-face_cascade = cv2.CascadeClassifier('/home/edov84/Documentos/TEC/Semestre1_2020/Taller_Sistemas_Embebidos/Proyecto3/Entrenador/haarcascade_frontalface_alt.xml')
+face_cascade = cv2.CascadeClassifier('./haarcascade_frontalface_alt.xml')
 
 cap = cv2.VideoCapture(0)
-path = "/home/edov84/Documentos/TEC/Semestre1_2020/Taller_Sistemas_Embebidos/Proyecto3/Entrenador/"# path were u want store the data set
+path = "./"# path were u want store the data set
 id = input('Digite su nombre entre comillas: ')
 
 try:
