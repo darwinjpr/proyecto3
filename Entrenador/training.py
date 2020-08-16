@@ -7,8 +7,8 @@ import imutils
 import face_recognition
 import pickle
 import os
-dataset = "/home/edov84/Documentos/TEC/Semestre1_2020/Taller_Sistemas_Embebidos/Proyecto3/Entrenador/edwin"# path of the data set 
-module = "/home/edov84/Documentos/TEC/Semestre1_2020/Taller_Sistemas_Embebidos/Proyecto3/Entrenador/modelo.pickle" # were u want to store the pickle file 
+dataset = "./person"# path of the data set 
+module = "./modelo.pickle" # were u want to store the pickle file 
 
 imagepaths = list(paths.list_images(dataset))
 knownEncodings = []
