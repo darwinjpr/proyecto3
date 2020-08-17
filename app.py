@@ -114,7 +114,6 @@ class Application(tk.Frame):
 	def endapp(self):#para terminar sniffer
 		print("\nTerminando ejecucion!")
 		self.channel.close()
-		self.channel.destroy()
 
 	def read(self):#Para leer informe generado por el sniffer
 		print("\nAbriendo informe!")
